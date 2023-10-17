@@ -10,6 +10,7 @@ import (
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 
+	htmx "github.com/smitpatelx/neurelo-go-htmx-example/src/htmx"
 	router "github.com/smitpatelx/neurelo-go-htmx-example/src/router"
 )
 
@@ -23,9 +24,15 @@ func main() {
 		}
 	}
 
+	// Get Template Engine
+	template_engine := htmx.GetTemplateEngine()
+
 	app := fiber.New(fiber.Config{
 		JSONEncoder: json.Marshal,
 		JSONDecoder: json.Unmarshal,
+		Views:       template_engine,
+		// Views Layout is the global layout for all template render until override on Render function.
+		ViewsLayout: "layouts/main",
 	})
 	app.Use(cors.New(cors.Config{
 		AllowOrigins:     os.Getenv("CORS_ALLOWED"),
