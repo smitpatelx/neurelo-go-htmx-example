@@ -1,8 +1,6 @@
 package router
 
 import (
-	"os"
-
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -12,6 +10,6 @@ func SetupRoutes(app *fiber.App) {
 
 	// Render homepage
 	app.Get("/", func(c *fiber.Ctx) error {
-		return c.Redirect(os.Getenv("FRONT_END_URL"))
+		return c.Render("index", fiber.Map{})
 	})
 }
