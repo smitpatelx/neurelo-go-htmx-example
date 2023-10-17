@@ -16,15 +16,10 @@ import (
 func main() {
 	// Env File
 	env := os.Getenv("ENV")
-	if env == "production" {
+	if env != "production" {
 		err := godotenv.Load(".env")
 		if err != nil {
 			log.Print("Could not load .env file")
-		}
-	} else {
-		err := godotenv.Load(".env.local")
-		if err != nil {
-			log.Print("Could not load .env.local file")
 		}
 	}
 
