@@ -19,8 +19,22 @@
         }
     }
     </script>
+
+    <!-- TailwindCss -->
+    <style lang="css">
+        html {
+            background-color: #000;
+        }
+    </style>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            body {
+                @apply w-full h-full min-h-screen bg-fixed bg-gradient-to-br from-zinc-800 via-zinc-950 to-zinc-900 text-zinc-100;
+            }
+        }
+    </style>
 </head>
-<body class="w-full h-full block">
+<body>
     {{embed}}
 </body>
 </html>
