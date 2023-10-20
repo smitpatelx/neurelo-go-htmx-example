@@ -11,6 +11,7 @@ import (
 	_ "github.com/lib/pq"
 
 	htmx "github.com/smitpatelx/neurelo-go-htmx-example/src/htmx"
+	"github.com/smitpatelx/neurelo-go-htmx-example/src/lib"
 	router "github.com/smitpatelx/neurelo-go-htmx-example/src/router"
 )
 
@@ -40,6 +41,9 @@ func main() {
 		AllowMethods:     "GET, PUT, POST, DELETE, OPTIONS",
 		AllowHeaders:     "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization",
 	}))
+
+	// Setup client
+	lib.SetupClient()
 
 	// Register all routes
 	router.SetupRoutes(app)
