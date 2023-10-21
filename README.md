@@ -12,4 +12,4 @@ air
 ```
 
 ## Demo:
-[![Watch the video](https://github.com/smitpatelx/neurelo-go-htmx-example/demo/video-preview.jpg)](https://github.com/smitpatelx/neurelo-go-htmx-example/demo/Neurelo-Go-HTMX-demo.mp4)
+https://github.com/smitpatelx/neurelo-go-htmx-example/assets/36929408/054e8314-b2d6-4b7b-9e3a-384946c448d6
