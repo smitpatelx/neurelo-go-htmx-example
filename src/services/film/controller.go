@@ -1,4 +1,4 @@
-package actor
+package film
 
 import (
 	"fmt"
@@ -8,35 +8,31 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func RenderIndexPage(c *fiber.Ctx) error {
-	return c.Render("index", fiber.Map{})
-}
-
-func GetAllActors(c *fiber.Ctx) error {
-	var req GetAllActorRequest
+func GetAllFilms(c *fiber.Ctx) error {
+	var req GetAllFilmRequest
 
 	trimmed_search := ""
 
 	err := c.QueryParser(&req)
 	if err != nil || req.Page == 0 {
-		return c.Redirect(fmt.Sprintf("/actors?page=1?search=%s", trimmed_search))
+		return c.Redirect(fmt.Sprintf("/films?page=1&search=%s", trimmed_search))
 	}
 
 	trimmed_search = strings.TrimSpace(req.Search)
 
-	res := ReadAllActorSvc(req)
-	actor_count := GetTotalActorsSvc(req)
+	res := ReadAllFilmSvc(req)
+	film_count := GetTotalFilmSvc(req)
 
-	if actor_count == nil {
+	if film_count == nil {
 		return c.Render("index", fiber.Map{})
 	}
 
 	var pages []int
-	total_page_count := int(math.Round(float64(*actor_count/12))) + 1
+	total_page_count := int(math.Round(float64(*film_count/12))) + 1
 
 	if req.Page > total_page_count {
 		// Redirect user back to last page.
-		return c.Redirect(fmt.Sprintf("/actors?page=%d&search=%s", total_page_count, trimmed_search))
+		return c.Redirect(fmt.Sprintf("/films?page=%d&search=%s", total_page_count, trimmed_search))
 	}
 
 	for i := 1; i <= total_page_count; i++ {
@@ -51,8 +47,8 @@ func GetAllActors(c *fiber.Ctx) error {
 	}
 
 	if res != nil {
-		return c.Render("actors", fiber.Map{
-			"Actors":         res,
+		return c.Render("films", fiber.Map{
+			"Films":          res,
 			"Page":           req.Page,
 			"TotalPages":     pages,
 			"TotalPageCount": total_page_count,
@@ -62,35 +58,34 @@ func GetAllActors(c *fiber.Ctx) error {
 		})
 	}
 
-	return c.Render("actors", fiber.Map{})
+	return c.Render("films", fiber.Map{})
 }
 
-func GetAllActorsAPI(c *fiber.Ctx) error {
-	var req GetAllActorRequest
-
+func GetAllFilmsAPI(c *fiber.Ctx) error {
+	var req GetAllFilmRequest
 	trimmed_search := ""
 
 	err := c.QueryParser(&req)
 	if err != nil || req.Page == 0 {
-		return c.Redirect(fmt.Sprintf("/api/v1/actors?page=1&search=%s", trimmed_search))
+		return c.Redirect(fmt.Sprintf("/api/v1/films?page=1&search=%s", trimmed_search))
 	}
 
 	trimmed_search = strings.TrimSpace(req.Search)
 
-	res := ReadAllActorSvc(req)
-	actor_count := GetTotalActorsSvc(req)
+	res := ReadAllFilmSvc(req)
+	film_count := GetTotalFilmSvc(req)
 
-	if actor_count == nil {
-		return c.Render("partials/actor_data", fiber.Map{})
+	if film_count == nil {
+		return c.Render("partials/film_data", fiber.Map{})
 	}
 
 	var pages []int
-	total_page_count := int(math.Round(float64(*actor_count/12))) + 1
+	total_page_count := int(math.Round(float64(*film_count/12))) + 1
 
 	if req.Page > (total_page_count) {
 		// Redirect user back to last page.
 		return c.Redirect(
-			fmt.Sprintf("/api/v1/actors?page=%d&search=%s",
+			fmt.Sprintf("/api/v1/films?page=%d&search=%s",
 				total_page_count,
 				trimmed_search,
 			))
@@ -108,8 +103,8 @@ func GetAllActorsAPI(c *fiber.Ctx) error {
 	}
 
 	if res != nil {
-		return c.Render("partials/actor_data", fiber.Map{
-			"Actors":         res,
+		return c.Render("partials/film_data", fiber.Map{
+			"Films":          res,
 			"Page":           req.Page,
 			"TotalPages":     pages,
 			"TotalPageCount": total_page_count,
@@ -119,5 +114,5 @@ func GetAllActorsAPI(c *fiber.Ctx) error {
 		})
 	}
 
-	return c.Render("partials/actor_data", fiber.Map{})
+	return c.Render("partials/film_data", fiber.Map{})
 }
