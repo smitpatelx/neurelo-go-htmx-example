@@ -25,3 +25,5 @@ go.work
 
 # Go air
 /tmp
+
+.DS_Store
