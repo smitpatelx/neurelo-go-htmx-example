@@ -1,6 +1,5 @@
-{{define "partials/actor_data"}}
 <div id="actor-holder" class="col-span-full grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
-    <div class="col-span-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-4 gap-x-0 md:gap-4 px-4">
+    <div id="actor-holder" class="col-span-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-4 gap-x-0 md:gap-4 px-4">
         {{range .Actors}}
             <div
                 class="rounded-md bg-zinc-800/40 hover:bg-zinc-900 py-4 px-5 ring-1 ring-zinc-800 hover:ring-zinc-600
@@ -58,12 +57,11 @@
                         ring-1 ring-cyan-800 hover:ring-cyan-600 text-cyan-200 hover:text-cyan-100
                         transition-all duration-300 ease-out cursor-no-drop select-none"
                     >
-                        {{.}}
+                        {{$.Page}}
                     </div>
-                {{end}}
-                {{if ne $.Page .}}
+                {{else}}
                     <a
-                        href="?page={{.}}&search={{.Search}}"
+                        href="?page={{.}}&search={{$.Search}}"
                         class="py-2 px-3 text-sm font-normal rounded-md bg-zinc-700 hover:bg-zinc-600
                         ring-1 ring-zinc-800 hover:ring-zinc-600 text-zinc-200 hover:text-zinc-100
                         transition-all duration-300 ease-out cursor-pointer focus:outline-none focus:border-0
@@ -76,4 +74,3 @@
         </div>
     </div>
 </div>
-{{end}}
