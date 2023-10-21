@@ -19,7 +19,7 @@ func GetAllActors(c *fiber.Ctx) error {
 
 	err := c.QueryParser(&req)
 	if err != nil || req.Page == 0 {
-		return c.Redirect(fmt.Sprintf("/actors?page=1?search=%s", trimmed_search))
+		return c.Redirect(fmt.Sprintf("/actors?page=1&search=%s", trimmed_search))
 	}
 
 	trimmed_search = strings.TrimSpace(req.Search)
