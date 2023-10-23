@@ -17,7 +17,7 @@ func ReadAllFilmSvc(req GetAllFilmRequest) *[]Film {
 		request_url = fmt.Sprintf("/rest/film/?skip=%d&take=12", (req.Page-1)*12)
 	}
 
-	string_filter := fmt.Sprintf(`{"OR":[{"title":{"equals":"%s"}},{"description":{"equals":"%s"}}]}`, req.Search, req.Search)
+	string_filter := fmt.Sprintf(`{"OR":[{"title":{"contains":"%s"}},{"description":{"contains":"%s"}}]}`, req.Search, req.Search)
 	if strings.TrimSpace(req.Search) != "" {
 		request_url = fmt.Sprintf("%s&filter=%s", request_url, url.QueryEscape(string_filter))
 	}
@@ -52,7 +52,7 @@ func GetTotalFilmSvc(req GetAllFilmRequest) *int {
 	string_select := `{"_count":["film_id"]}`
 	request_url := fmt.Sprintf("/rest/film/__aggregate?select=%s", url.QueryEscape(string_select))
 
-	string_filter := fmt.Sprintf(`{"OR":[{"title":{"equals":"%s"}},{"description":{"equals":"%s"}}]}`, req.Search, req.Search)
+	string_filter := fmt.Sprintf(`{"OR":[{"title":{"contains":"%s"}},{"description":{"contains":"%s"}}]}`, req.Search, req.Search)
 	if strings.TrimSpace(req.Search) != "" {
 		request_url = fmt.Sprintf("%s&filter=%s", request_url, url.QueryEscape(string_filter))
 	}

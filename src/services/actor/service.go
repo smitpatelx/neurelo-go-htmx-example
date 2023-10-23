@@ -19,7 +19,7 @@ func ReadAllActorSvc(req GetAllActorRequest) *[]Actor {
 		request_url = fmt.Sprintf("/rest/actor/?skip=%d&take=12", (req.Page-1)*12)
 	}
 
-	string_filter := fmt.Sprintf(`{"OR":[{"first_name":{"equals":"%s"}},{"last_name":{"equals":"%s"}}]}`, req.Search, req.Search)
+	string_filter := fmt.Sprintf(`{"OR":[{"first_name":{"contains":"%s"}},{"last_name":{"contains":"%s"}}]}`, req.Search, req.Search)
 	if len(strings.TrimSpace(req.Search)) > 0 {
 		request_url = fmt.Sprintf("%s&filter=%s", request_url, url.QueryEscape(string_filter))
 	}
@@ -55,7 +55,7 @@ func GetTotalActorsSvc(req GetAllActorRequest) *int {
 
 	request_url := fmt.Sprintf("/rest/actor/__aggregate?select=%s", url.QueryEscape(string_select))
 
-	string_filter := fmt.Sprintf(`{"OR":[{"first_name":{"equals":"%s"}},{"last_name":{"equals":"%s"}}]}`, req.Search, req.Search)
+	string_filter := fmt.Sprintf(`{"OR":[{"first_name":{"contains":"%s"}},{"last_name":{"contains":"%s"}}]}`, req.Search, req.Search)
 	if strings.TrimSpace(req.Search) != "" {
 		request_url = fmt.Sprintf("%s&filter=%s", request_url, url.QueryEscape(string_filter))
 	}
