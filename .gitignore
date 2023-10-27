@@ -27,3 +27,4 @@ go.work
 /tmp
 
 .DS_Store
+vendor
